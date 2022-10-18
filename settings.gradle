@@ -1,0 +1,6 @@
+rootProject.name = 'BoostMicroservices'
+include 'auth-service'
+include 'auth-service:user-service'
+findProject(':auth-service:user-service')?.name = 'user-service'
+include 'user-service'
+

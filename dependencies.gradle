@@ -1,0 +1,20 @@
+ext{
+    versions = [
+            springBoot              : "2.7.4",
+            lombok                  : "1.18.24",
+            mapstruct               : "1.5.2.Final",
+            postgresql              : "42.5.0",
+            swagger                 : "1.6.12"
+    ]
+
+    libs = [
+            springBootStarterWeb    : "org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
+            springBootDataJpa       : "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
+            springBootValidation    : "org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
+            swaggerui               : "org.springdoc:springdoc-openapi-ui:$versions.swagger",
+            lombok                  : "org.projectlombok:lombok:$versions.lombok",
+            postgresql              : "org.postgresql:postgresql:$versions.postgresql",
+    ]
+
+
+}
