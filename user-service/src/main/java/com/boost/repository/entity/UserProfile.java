@@ -1,7 +1,4 @@
 package com.boost.repository.entity;
-
-import com.boost.repository.enums.Activated;
-import com.boost.repository.enums.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,23 +6,26 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Table(name = "tbluserprofile")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-@Table(name = "tblauth")
-@Entity
-public class Auth {
+@Data
+public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(length = 16,nullable = false,unique = true)
+    /**
+     * Auth servisinden kayıt olan kişinin auth id sini buraya eşitliyoruz.
+     */
+    Long authid;
     String username;
-    String password;
+    String name;
+    String surname;
     String email;
     String phone;
-    @Enumerated(EnumType.STRING)
-    Activated activated;
-    @Enumerated(EnumType.STRING)
-    Roles roles;
+    String address;
+    String avatar;
+
 }

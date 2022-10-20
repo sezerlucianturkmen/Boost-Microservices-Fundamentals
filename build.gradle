@@ -48,6 +48,7 @@ allprojects{
         annotationProcessor libs.lombok
         implementation libs.springBootValidation
         implementation libs.swaggerui
+        implementation libs.springCloudOpenFeign
     }
 }
 /**
