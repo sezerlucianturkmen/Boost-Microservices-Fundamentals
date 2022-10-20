@@ -9,6 +9,7 @@ import com.boost.manager.IUserProfileManager;
 import com.boost.repository.IAuthRepository;
 import com.boost.repository.entity.Auth;
 import com.boost.repository.enums.Roles;
+import com.boost.utility.JwtTokenManager;
 import com.boost.utility.ServiceManager;
 import com.boost.utility.TokenManager;
 import org.postgresql.util.PSQLException;
@@ -21,11 +22,11 @@ import java.util.Optional;
 @Service
 public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository repository;
-    private final TokenManager tokenManager;
+    private final JwtTokenManager tokenManager;
     private final IUserProfileManager userProfileManager;
     public AuthService(IAuthRepository repository,
                        IUserProfileManager userProfileManager,
-                       TokenManager tokenManager) {
+                       JwtTokenManager tokenManager) {
         super(repository);
         this.repository = repository;
         this.userProfileManager = userProfileManager;
@@ -58,7 +59,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Optional<Auth> auth = repository.findOptionalByUsernameAndPassword(
                 dto.getUsername(),dto.getPassword());
         if(auth.isEmpty()) throw new AuthServiceException(ErrorType.LOGIN_ERROR_001);
-        return tokenManager.generateToken(auth.get().getId());
+        return tokenManager.createToken(auth.get().getId());
     }
 
 }

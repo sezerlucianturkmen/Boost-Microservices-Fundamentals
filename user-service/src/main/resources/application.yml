@@ -14,3 +14,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+# JWT
+myjwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}
