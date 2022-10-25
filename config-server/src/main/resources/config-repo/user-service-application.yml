@@ -1,0 +1,31 @@
+server:
+  port: 9092
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: user-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://34.172.100.113:1111/UserDB
+    username: postgres
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+myredis:
+  host: localhost
+  port: 6379
+
+# JWT
+myjwt:
+  secretkey: ${secretkey}
+  audience: ${audience}
+  issuer: ${issuer}

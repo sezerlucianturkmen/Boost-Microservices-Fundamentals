@@ -1,6 +1,8 @@
 rootProject.name = 'BoostMicroservices'
 include 'auth-service'
-include 'auth-service:user-service'
-findProject(':auth-service:user-service')?.name = 'user-service'
 include 'user-service'
+include 'config-server'
+include 'config-server-git'
+include 'api-gateway-service'
+include 'elastic-service'
 

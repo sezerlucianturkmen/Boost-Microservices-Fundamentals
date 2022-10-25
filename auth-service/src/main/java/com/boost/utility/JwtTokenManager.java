@@ -38,7 +38,7 @@ public class JwtTokenManager {
                     .withAudience(audience)
                     .withIssuer(issuer)
                     .withIssuedAt(new java.util.Date())
-                    .withExpiresAt(new Date(System.currentTimeMillis()+(1000*60)))
+                    .withExpiresAt(new Date(System.currentTimeMillis()+(1000*60*5)))
                     .withClaim("authid",authid)
                     .sign(algorithm); // en son imzalama islemi
             return token;
@@ -62,7 +62,5 @@ public class JwtTokenManager {
         }catch (Exception e){
             return null;
         }
-
-
     }
 }

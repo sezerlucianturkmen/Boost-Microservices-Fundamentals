@@ -2,15 +2,15 @@ package com.boost.controller;
 
 import com.boost.dto.request.LoginRequestDto;
 import com.boost.dto.request.RegisterRequestDto;
+import com.boost.repository.entity.Auth;
 import com.boost.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static  com.boost.constants.ApiUrls.*;
 
@@ -28,5 +28,9 @@ public class AuthController {
         if(authService.save(dto))
             return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
+    }
+    @GetMapping("/getall")
+    public ResponseEntity<List<Auth>> getList(){
+        return ResponseEntity.ok(authService.findAll());
     }
 }

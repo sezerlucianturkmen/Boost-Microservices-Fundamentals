@@ -9,6 +9,8 @@ import com.boost.repository.entity.UserProfile;
 import com.boost.utility.JwtTokenManager;
 import com.boost.utility.ServiceManager;
 import com.boost.utility.TokenManager;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,11 +21,14 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
 
     private final IUserProfileRepository iUserProfileRepository;
     private final JwtTokenManager tokenManager;
+
+    private final CacheManager cacheManager;
     public UserProfileService(IUserProfileRepository iUserProfileRepository,
-                              JwtTokenManager tokenManager) {
+                              JwtTokenManager tokenManager, CacheManager cacheManager) {
         super(iUserProfileRepository);
         this.iUserProfileRepository = iUserProfileRepository;
         this.tokenManager = tokenManager;
+        this.cacheManager=cacheManager;
     }
 
     public Boolean save(UserProfileSaveRequestDto dto){
@@ -50,4 +55,27 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
         save(profile);
         return true;
     }
+
+    @Cacheable(value = "uppercase")
+    public String getUpperCase(Long authid) {
+        /**
+         * Bu kısım methodun belli işlem basamaklarını simüle etmek ve
+         * belli zaman alacak işlemleri göstermek için yazılmıştır.
+         */
+        try{
+            Thread.sleep(3000);
+        }catch (Exception e){
+
+        }
+        Optional<UserProfile> user = iUserProfileRepository.findOptionalByAuthid(authid);
+        if(user.isEmpty()) return "";
+        return user.get().getName().toUpperCase();
+    }
+
+    public void updateCacheReset(UserProfile profile){
+        save(profile);
+        cacheManager.getCache("uppercase").clear();
+    }
+
+
 }

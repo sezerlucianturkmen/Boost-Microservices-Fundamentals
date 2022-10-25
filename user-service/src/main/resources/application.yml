@@ -1,22 +1,8 @@
-server:
-  port: 9092
-
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://34.172.100.113:1111/UserDB
-    username: postgres
-    password: 123456
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-# JWT
-myjwt:
-  secretkey: ${secretkey}
-  audience: ${audience}
-  issuer: ${issuer}
+  cloud:
+    config:
+      uri: http://localhost:8888
+  config:
+    import: "configserver:"
+  application:
+    name: user-service-application

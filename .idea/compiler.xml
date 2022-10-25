@@ -8,8 +8,11 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.24/13a394eed5c4f9efb2a6d956e2086f1d81e857d9/lombok-1.18.24.jar" />
         </processorPath>
         <module name="BoostMicroservices.auth-service.main" />
-        <module name="BoostMicroservices.auth-service.user-service.main" />
+        <module name="BoostMicroservices.config-server-git.main" />
         <module name="BoostMicroservices.main" />
+        <module name="BoostMicroservices.config-server.main" />
+        <module name="BoostMicroservices.api-gateway-service.main" />
+        <module name="BoostMicroservices.elastic-service.main" />
         <module name="BoostMicroservices.user-service.main" />
       </profile>
     </annotationProcessing>
