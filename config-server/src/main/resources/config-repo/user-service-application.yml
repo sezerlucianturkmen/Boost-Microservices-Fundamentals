@@ -29,3 +29,9 @@ myjwt:
   secretkey: ${secretkey}
   audience: ${audience}
   issuer: ${issuer}
+
+myapplication:
+    user-service:
+      feign-client: http://localhost:9092/api/v1
+    elastic-service:
+      feign-client: http://localhost:9099/api/v1/elastic

@@ -41,7 +41,7 @@ public class UserProfileContoller {
     public ResponseEntity<UserProfile> findById(){
         return null;
     }
-    @PostMapping(USER_LIST)
+    @GetMapping(USER_LIST)
     public ResponseEntity<List<UserProfile>> userList(){
         return null;
     }

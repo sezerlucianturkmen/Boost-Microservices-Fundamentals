@@ -4,6 +4,7 @@ import com.boost.dto.request.UserProfileSaveRequestDto;
 import com.boost.dto.request.UserProfileUpdateRequestDto;
 import com.boost.exception.ErrorType;
 import com.boost.exception.UserServiceException;
+import com.boost.manager.IElasticSearchManager;
 import com.boost.repository.IUserProfileRepository;
 import com.boost.repository.entity.UserProfile;
 import com.boost.utility.JwtTokenManager;
@@ -23,20 +24,23 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
     private final JwtTokenManager tokenManager;
 
     private final CacheManager cacheManager;
+    private final IElasticSearchManager elasticSearchManager;
     public UserProfileService(IUserProfileRepository iUserProfileRepository,
-                              JwtTokenManager tokenManager, CacheManager cacheManager) {
+                              JwtTokenManager tokenManager, CacheManager cacheManager,IElasticSearchManager elasticSearchManager) {
         super(iUserProfileRepository);
         this.iUserProfileRepository = iUserProfileRepository;
         this.tokenManager = tokenManager;
         this.cacheManager=cacheManager;
+        this.elasticSearchManager=elasticSearchManager;
     }
 
     public Boolean save(UserProfileSaveRequestDto dto){
-        save(UserProfile.builder()
+       UserProfile userProfile= save(UserProfile.builder()
                 .authid(dto.getAuthid())
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .build());
+       elasticSearchManager.save(userProfile);
         return true;
     }
 
@@ -53,6 +57,7 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
         profile.setName(dto.getName());
         profile.setSurname(dto.getSurname());
         save(profile);
+        elasticSearchManager.update(profile);
         return true;
     }
 
