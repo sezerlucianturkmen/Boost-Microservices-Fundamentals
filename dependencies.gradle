@@ -7,37 +7,43 @@ ext{
             postgresql                          : "42.5.0",
             swagger                             : "1.6.12",
             auth0                               : "4.1.0",
+            graphql                             : "13.0.0",
+            graphiql                            : "11.1.0",
     ]
 
     libs = [
-            springBootStarterWeb                : "org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
-            springBootDataJpa                   : "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
-            springBootValidation                : "org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
-            springCloudOpenFeign                : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
-            swaggerui                           : "org.springdoc:springdoc-openapi-ui:$versions.swagger",
-            lombok                              : "org.projectlombok:lombok:$versions.lombok",
-            postgresql                          : "org.postgresql:postgresql:$versions.postgresql",
-            auth0                               : "com.auth0:java-jwt:$versions.auth0",
-
+            springBootStarterWeb    : "org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
+            // İlişksel veritabanları için bağlantı bağımlılığı
+            springBootDataJpa       : "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
+            // Web Api isteklerinde gelen dataların zorululuklarını aktif etmek ve kullanmaı için
+            springBootValidation    : "org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
+            // Microservisler ve 3 taraf apilere istek atmak için kullanılan bağımlılık
+            springCloudOpenFeign    : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
+            // endpoint lerimizi görselleştiren html arayüz entegrasyonu
+            swaggerui               : "org.springdoc:springdoc-openapi-ui:$versions.swagger",
+            lombok                  : "org.projectlombok:lombok:$versions.lombok",
+            postgresql              : "org.postgresql:postgresql:$versions.postgresql",
+            // JWT entegrasyonu için kullanılan bağımlılık
+            auth0                   : "com.auth0:java-jwt:$versions.auth0",
             // Spring Config Server için gerekli bağımlılıklar
-            springCloudStarterConfig            : "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
-            springCloudConfigServer             : "org.springframework.cloud:spring-cloud-config-server:$versions.springCloud",
-            springCloudConfigClient             : "org.springframework.cloud:spring-cloud-config-client:$versions.springCloud",
-
-            //Spring Gateway
-            springCloudGateway                  : "org.springframework.cloud:spring-cloud-starter-gateway:$versions.springCloud",
-            springCloudCircuitBreaker           : "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:2.1.4",
-            springCloudCircuitBreakerReactor    : "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:2.1.4",
-
+            springCloudStarterConfig: "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
+            springCloudConfigServer : "org.springframework.cloud:spring-cloud-config-server:$versions.springCloud",
+            springCloudConfigClient : "org.springframework.cloud:spring-cloud-config-client:$versions.springCloud",
+            // Spring GateWay işlemleri için gerekli bağımlılıklar
+            springCloudGateway      : "org.springframework.cloud:spring-cloud-starter-gateway:$versions.springCloud",
+            springCloudCircuitBreaker: "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:2.1.4",
+            springCloudCircuitBreakerReactor: "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:2.1.4",
             // Mikro Servislerin endponit takiplerini yapmak ve yaşam döngülerini takip etmek için kullanılır.
-            springCloudStaterSleuth             : "org.springframework.cloud:spring-cloud-starter-sleuth:$versions.springCloud",
-            springCloudSleuthZipkin             : "org.springframework.cloud:spring-cloud-sleuth-zipkin:$versions.springCloud",
-
+            springCloudStaterSleuth : "org.springframework.cloud:spring-cloud-starter-sleuth:$versions.springCloud",
+            springCloudSleuthZipkin : "org.springframework.cloud:spring-cloud-sleuth-zipkin:$versions.springCloud",
             // Redis kullanımı için gerekli olan bağımlılıklar
             springDataRedis         : "org.springframework.boot:spring-boot-starter-data-redis:$versions.springBoot",
-
             // Elastic Search için gerekli data bağımlılıkları
             springDataElasticSearch : "org.springframework.boot:spring-boot-starter-data-elasticsearch:$versions.springBoot",
+            // GraphQL için gerekli bağımlılıklar
+            springGraphQL           : "com.graphql-java-kickstart:graphql-spring-boot-starter:$versions.graphql",
+            springGraphQLUI         : "com.graphql-java-kickstart:graphiql-spring-boot-starter:$versions.graphiql",
+            springGraphQLTools      : "com.graphql-java-kickstart:graphql-java-tools:$versions.graphql",
 
 
     ]

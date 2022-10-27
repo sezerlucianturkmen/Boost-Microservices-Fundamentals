@@ -9,11 +9,12 @@ import java.util.List;
 
 import static com.boost.constants.ApiUrls.*;
 
-@FeignClient(name="user-service",
-        url="${myapplication.user-service.feign-client}/user",
-        decode404 = true)
+@FeignClient(name = "user-service",
+        //          http://localhost:9092/api/v1         /user
+        url = "${myapplication.user-service.feign-client}/user"
+        ,decode404 = true)
 public interface IUserProfileManager {
 
     @GetMapping(USER_LIST)
-    public ResponseEntity<List<UserProfile>> userList();
+    ResponseEntity<List<UserProfile>> userList();
 }

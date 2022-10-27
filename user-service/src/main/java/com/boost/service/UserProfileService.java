@@ -16,49 +16,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserProfileService extends ServiceManager<UserProfile,Long> {
 
-
     private final IUserProfileRepository iUserProfileRepository;
     private final JwtTokenManager tokenManager;
-
     private final CacheManager cacheManager;
     private final IElasticSearchManager elasticSearchManager;
     public UserProfileService(IUserProfileRepository iUserProfileRepository,
-                              JwtTokenManager tokenManager, CacheManager cacheManager,IElasticSearchManager elasticSearchManager) {
+                              CacheManager cacheManager,
+                              IElasticSearchManager elasticSearchManager,
+                              JwtTokenManager tokenManager) {
         super(iUserProfileRepository);
         this.iUserProfileRepository = iUserProfileRepository;
         this.tokenManager = tokenManager;
-        this.cacheManager=cacheManager;
-        this.elasticSearchManager=elasticSearchManager;
-    }
-
-    public Boolean save(UserProfileSaveRequestDto dto){
-       UserProfile userProfile= save(UserProfile.builder()
-                .authid(dto.getAuthid())
-                .username(dto.getUsername())
-                .email(dto.getEmail())
-                .build());
-       elasticSearchManager.save(userProfile);
-        return true;
-    }
-
-    public Boolean update(UserProfileUpdateRequestDto dto){
-        Optional<Long> authid = tokenManager.getByIdFromToken(dto.getToken());
-        if(authid.isEmpty()) throw new UserServiceException(ErrorType.GECERSIZ_TOKEN);
-        Optional<UserProfile> userProfile =
-                iUserProfileRepository.findOptionalByAuthid(authid.get());
-        if(userProfile.isEmpty()) throw new UserServiceException(ErrorType.KULLANICI_BULUNAMADI);
-        UserProfile profile = userProfile.get();
-        profile.setAddress(dto.getAddress());
-        profile.setPhone(dto.getPhone());
-        profile.setAvatar(dto.getAvatar());
-        profile.setName(dto.getName());
-        profile.setSurname(dto.getSurname());
-        save(profile);
-        elasticSearchManager.update(profile);
-        return true;
+        this.cacheManager = cacheManager;
+        this.elasticSearchManager = elasticSearchManager;
     }
 
     @Cacheable(value = "uppercase")
@@ -76,10 +53,39 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
         if(user.isEmpty()) return "";
         return user.get().getName().toUpperCase();
     }
-
+    public Boolean save(UserProfileSaveRequestDto dto){
+        UserProfile userProfile =   save(UserProfile.builder()
+                .authid(dto.getAuthid())
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .build());
+        elasticSearchManager.save(userProfile);
+        return true;
+    }
+    public Boolean update(UserProfileUpdateRequestDto dto){
+        Optional<Long> authid = tokenManager.getByIdFromToken(dto.getToken());
+        if(authid.isEmpty()) throw new UserServiceException(ErrorType.GECERSIZ_ID);
+        Optional<UserProfile> userProfile =
+                iUserProfileRepository.findOptionalByAuthid(authid.get());
+        if(userProfile.isEmpty()) throw new UserServiceException(ErrorType.KULLANICI_BULUNAMADI);
+        UserProfile profile = userProfile.get();
+        profile.setAddress(dto.getAddress());
+        profile.setPhone(dto.getPhone());
+        profile.setAvatar(dto.getAvatar());
+        profile.setName(dto.getName());
+        profile.setSurname(dto.getSurname());
+        save(profile);
+        elasticSearchManager.update(profile);
+        return true;
+    }
     public void updateCacheReset(UserProfile profile){
         save(profile);
-        cacheManager.getCache("uppercase").clear();
+        /**
+         * Bu işlem ilgili method tarafından tutulan tüm önbeleklenmiş datayı temizler
+         * çok istemediğimiz gerekli olduğunda kullanmamız gereken bir yapıdır.
+         *  cacheManager.getCache("uppercase")
+         */
+        cacheManager.getCache("uppercase").evict(profile.getAuthid());
     }
 
 

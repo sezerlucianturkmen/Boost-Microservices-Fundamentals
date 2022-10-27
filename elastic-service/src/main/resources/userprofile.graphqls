@@ -1,0 +1,24 @@
+type UserProfile{
+    id: ID!
+    authid: Int!
+    username: String!
+    email: String!
+    phone: String!
+    avatar: String!
+}
+
+input UserProfileInput{
+    authid: Int!
+    username: String!
+    email: String!
+}
+
+
+type Query{
+    findByUsername(username: String!): [UserProfile]
+    findAll: [UserProfile]
+}
+
+type Mutation{
+    createUserProfile(userprofile: UserProfileInput!): Boolean
+}

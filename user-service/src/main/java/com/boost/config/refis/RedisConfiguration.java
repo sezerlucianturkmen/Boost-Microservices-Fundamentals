@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
-@EnableCaching // ön belleme işlemlerini aktif etmek için kullanılır
+@EnableCaching // ön bellekleme işlemlerini aktif etmek için kulllanılır.
 @EnableRedisRepositories
 public class RedisConfiguration {
 
@@ -20,7 +20,8 @@ public class RedisConfiguration {
 
 
     @Bean
-    public LettuceConnectionFactory redisConnectionFactory(){
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration("server",6379));
+    public LettuceConnectionFactory redisConnectionFactory() {
+
+        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
     }
 }

@@ -6,7 +6,7 @@ spring:
     enabled: true
     base-url: http://localhost:9411
     service:
-      name: config-service
+      name: config-server
   profiles:
     active: native
   cloud:

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.boost.constants.ApiUrls.*;
-
 @RestController
 @RequestMapping(USER)
 @RequiredArgsConstructor
@@ -21,14 +20,25 @@ public class UserProfileContoller {
     private final UserProfileService userProfileService;
 
     @GetMapping("/getupper")
-    public ResponseEntity<String> getUpperCase(Long id) {
-        return ResponseEntity.ok(userProfileService.getUpperCase(id));
+    public ResponseEntity<String> getUpperCase(Long authid) {
+        return ResponseEntity.ok(userProfileService.getUpperCase(authid));
     }
+
     @PostMapping("/savecachable")
     public ResponseEntity<Void> updateUser(@RequestBody UserProfile userProfile){
         userProfileService.updateCacheReset(userProfile);
         return ResponseEntity.ok().build();
     }
+
+
+    /**
+     * Kullanıcı kaydı, auth service te yapılıyor ve burada olan bilgiler user-service e gönderiliyor.
+     * Auth-Service ten gelecek olan parametreler:
+     * 1- username
+     * 2- email
+     * 3- authid
+     * @return
+     */
     @PostMapping(SAVE)
     public ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto dto){
         return ResponseEntity.ok(userProfileService.save(dto));
@@ -43,6 +53,6 @@ public class UserProfileContoller {
     }
     @GetMapping(USER_LIST)
     public ResponseEntity<List<UserProfile>> userList(){
-        return null;
+        return ResponseEntity.ok(userProfileService.findAll());
     }
 }

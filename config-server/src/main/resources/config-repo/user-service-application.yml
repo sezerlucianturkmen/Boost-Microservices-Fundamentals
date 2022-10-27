@@ -8,10 +8,10 @@ spring:
     service:
       name: user-service
   datasource:
+    username: 'postgres'
+    password: 'root'
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://34.172.100.113:1111/UserDB
-    username: postgres
-    password: 123456
+    url: 'jdbc:postgresql://localhost:5432/MicroUserDB'
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,14 +24,14 @@ myredis:
   host: localhost
   port: 6379
 
+myapplication:
+  user-service:
+    feign-client: http://localhost:9092/api/v1
+  elastic-service:
+    feign-client: http://localhost:9099/api/v1/elastic
+
 # JWT
 myjwt:
   secretkey: ${secretkey}
   audience: ${audience}
   issuer: ${issuer}
-
-myapplication:
-    user-service:
-      feign-client: http://localhost:9092/api/v1
-    elastic-service:
-      feign-client: http://localhost:9099/api/v1/elastic

@@ -1,5 +1,4 @@
 package com.boost.utility;
-
 import com.boost.manager.IUserProfileManager;
 import com.boost.repository.entity.UserProfile;
 import com.boost.service.UserProfileService;
@@ -15,11 +14,14 @@ public class UserComponent {
 
     private final IUserProfileManager userProfileManager;
     private final UserProfileService userProfileService;
-
-
     @PostConstruct
     public void firstRun(){
-        List<UserProfile> userProfiles=userProfileManager.userList().getBody();
-        userProfileService.saveAll(userProfiles);
+        List<UserProfile> userProfiles = userProfileManager.userList().getBody();
+
+        userProfiles.forEach(userProfile -> {
+            userProfile.setId(null);
+            userProfile.setUserid(Long.getLong(userProfile.getId()));
+            userProfileService.save(userProfile);
+        });
     }
 }

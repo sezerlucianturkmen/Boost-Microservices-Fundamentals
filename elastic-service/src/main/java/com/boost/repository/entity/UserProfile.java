@@ -1,4 +1,5 @@
 package com.boost.repository.entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -6,15 +7,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
+@Builder
 @Document(indexName = "userprofile")
 public class UserProfile {
     @Id
-    Long id;
+    String id;
+    Long userid;
+    /**
+     * Auth servisinden kayıt olan kişinin auth id sini buraya eşitliyoruz.
+     */
     Long authid;
     String username;
     String name;
@@ -23,5 +27,4 @@ public class UserProfile {
     String phone;
     String address;
     String avatar;
-
 }
