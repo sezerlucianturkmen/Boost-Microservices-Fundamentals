@@ -64,4 +64,9 @@ public class UserProfileContoller {
     public ResponseEntity<Page<UserProfile>> getAllslice(int page,int size, String parameter,String direction){
         return ResponseEntity.ok(userProfileService.getAllSlice(page, size, parameter, direction));
     }
+    @PostMapping("/saveall")
+    public ResponseEntity<Void> saveAll(@RequestBody List<UserProfileSaveRequestDto> dtos){
+        dtos.forEach(dto->userProfileService.save(dto));
+        return ResponseEntity.ok().build();
+    }
 }

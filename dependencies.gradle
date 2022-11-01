@@ -44,7 +44,8 @@ ext{
             springGraphQL           : "com.graphql-java-kickstart:graphql-spring-boot-starter:$versions.graphql",
             springGraphQLUI         : "com.graphql-java-kickstart:graphiql-spring-boot-starter:$versions.graphiql",
             springGraphQLTools      : "com.graphql-java-kickstart:graphql-java-tools:$versions.graphql",
-
+            // NoSQL veritabanları için bağlantı bağımlılığı
+            springBootDataMongodb   : "org.springframework.boot:spring-boot-starter-data-mongodb:$versions.springBoot",
 
     ]
 

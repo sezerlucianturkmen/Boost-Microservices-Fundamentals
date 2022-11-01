@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  labels:
+    app: mongodbdeployment
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo
+          resources:
+            requests:
+              memory: 1024Mi
+              cpu: 250m
+            limits:
+              memory: 2048Mi
+              cpu: 500m
+          ports:
+            - containerPort: 27017
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "AdminBilge"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "m=YEJ-Sw_2oF6lp8uPr5"
