@@ -6,6 +6,7 @@ import com.boost.repository.entity.UserProfile;
 import com.boost.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,5 +55,13 @@ public class UserProfileContoller {
     @GetMapping(USER_LIST)
     public ResponseEntity<List<UserProfile>> userList(){
         return ResponseEntity.ok(userProfileService.findAll());
+    }
+    @GetMapping("/gellallpage")
+    public ResponseEntity<Page<UserProfile>> getAllPage(int page,int size, String parameter,String direction){
+        return ResponseEntity.ok(userProfileService.getAllPage(page, size, parameter, direction));
+    }
+    @GetMapping("/gellallslice")
+    public ResponseEntity<Page<UserProfile>> getAllslice(int page,int size, String parameter,String direction){
+        return ResponseEntity.ok(userProfileService.getAllSlice(page, size, parameter, direction));
     }
 }

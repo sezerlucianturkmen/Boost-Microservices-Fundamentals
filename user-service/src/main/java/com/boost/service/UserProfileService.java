@@ -12,6 +12,10 @@ import com.boost.utility.ServiceManager;
 import com.boost.utility.TokenManager;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -88,5 +92,27 @@ public class UserProfileService extends ServiceManager<UserProfile,Long> {
         cacheManager.getCache("uppercase").evict(profile.getAuthid());
     }
 
+    /**
+     *
+     * @param pageSize -> her seferinde kaç kayıt döneceğini söyler
+     * @param currentPageNumber -> geçerli sayfanın hangisi olduğunu söyler
+     * @param sortParameter -> sıralama işleminin hangi kolona göreyapılacağını belirler
+     * @param sortDirection -> sıralma yönü ASC ,DESC
+     * @return
+     */
+    public Page<UserProfile> getAllPage(int pageSize, int currentPageNumber, String sortParameter, String sortDirection){
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection),sortParameter);
+        Pageable pageable= PageRequest.of(currentPageNumber,pageSize,sort);
+        return iUserProfileRepository.findAll(pageable);
+    }
+
+    /**
+     *  Slice sonsuz scroll yaparken daha iyi çalışır Page e göre daha iyi performas gösterir.     *
+     */
+    public Page<UserProfile> getAllSlice(int pageSize, int currentPageNumber, String sortParameter, String sortDirection){
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection),sortParameter);
+        Pageable pageable= PageRequest.of(currentPageNumber,pageSize,sort);
+        return iUserProfileRepository.findAll(pageable);
+    }
 
 }
