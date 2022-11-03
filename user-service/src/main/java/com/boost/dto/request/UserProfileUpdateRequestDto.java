@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class UserProfileUpdateRequestDto {
+    Long authid;
     String token;
     String name;
     String surname;

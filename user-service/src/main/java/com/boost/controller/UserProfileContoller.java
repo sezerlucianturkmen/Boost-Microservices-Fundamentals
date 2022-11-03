@@ -48,6 +48,10 @@ public class UserProfileContoller {
     public ResponseEntity<Boolean> update(UserProfileUpdateRequestDto dto){
         return ResponseEntity.ok(userProfileService.update(dto));
     }
+    @PostMapping("updatenontoken")
+    public ResponseEntity<Boolean> updateNonToken(UserProfileUpdateRequestDto dto){
+        return ResponseEntity.ok(userProfileService.updateNonToken(dto));
+    }
     @PostMapping(FIND_BY_ID)
     public ResponseEntity<UserProfile> findById(){
         return null;

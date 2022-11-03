@@ -63,7 +63,7 @@ public class UserProfileService extends ServiceManager<UserProfile,String> {
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .build());
-        elasticSearchManager.save(userProfile);
+        //elasticSearchManager.save(userProfile);
         return true;
     }
     public Boolean update(UserProfileUpdateRequestDto dto){
@@ -79,9 +79,24 @@ public class UserProfileService extends ServiceManager<UserProfile,String> {
         profile.setName(dto.getName());
         profile.setSurname(dto.getSurname());
         save(profile);
-        elasticSearchManager.update(profile);
+        //elasticSearchManager.update(profile);
         return true;
     }
+
+    public Boolean updateNonToken(UserProfileUpdateRequestDto dto){
+        Optional<UserProfile> userProfile =
+                iUserProfileRepository.findOptionalByAuthid(dto.getAuthid());
+        UserProfile profile = userProfile.get();
+        profile.setAddress(dto.getAddress());
+        profile.setPhone(dto.getPhone());
+        profile.setAvatar(dto.getAvatar());
+        profile.setName(dto.getName());
+        profile.setSurname(dto.getSurname());
+        save(profile);
+        // elasticSearchManager.update(profile);
+        return true;
+    }
+
     public void updateCacheReset(UserProfile profile){
         save(profile);
         /**
