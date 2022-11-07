@@ -5,4 +5,5 @@ include 'config-server'
 include 'config-server-git'
 include 'api-gateway-service'
 include 'elastic-service'
+include 'main-service'
 

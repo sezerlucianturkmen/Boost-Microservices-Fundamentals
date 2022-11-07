@@ -1,5 +1,6 @@
 package com.boost.exception;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,11 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public enum ErrorType {
     INTERNAL_ERROR(2000, "Internal Server Error", INTERNAL_SERVER_ERROR),
     BAD_REQUEST_ERROR(2001, "Invalid Parameter Error", BAD_REQUEST),
-    LOGIN_ERROR_001(1402, "Kullanıcı adı ya da şifre hatalı", INTERNAL_SERVER_ERROR),
-    KULLANICI_ZATEN_KAYITLI(1403,"Bu Kullanınıcı adı zaten kayıtlı", INTERNAL_SERVER_ERROR);
+    LOGIN_ERROR_001(190, "Kullanıcı adı ya da şifre hatalı", INTERNAL_SERVER_ERROR),
+    GECERSIZ_TOKEN(200,"Token bilgisi geçersizdir.", INTERNAL_SERVER_ERROR),
+    GECERSIZ_ID(202,"Auth id bilgisi null gelmiştir.", INTERNAL_SERVER_ERROR),
+    KULLANICI_BULUNAMADI(201,"Güncelleme yapılacak kullanıcı kayıtlı değil.", INTERNAL_SERVER_ERROR);
+
 
     private int code;
     private String message;

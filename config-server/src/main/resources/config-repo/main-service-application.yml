@@ -1,5 +1,5 @@
 server:
-  port: 9092
+  port: 9091
 
 spring:
   security:
@@ -22,20 +22,8 @@ spring:
     enabled: true
     base-url: http://localhost:9411
     service:
-      name: user-service
+      name: main-service
 
-#  datasource:
-#    username: 'postgres'
-#    password: 'root'
-#    driver-class-name: org.postgresql.Driver
-#    url: 'jdbc:postgresql://localhost:5432/MicroUserDB'
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
 
 myredis:
   host: localhost

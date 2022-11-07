@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/config-server" />
             <option value="$PROJECT_DIR$/config-server-git" />
             <option value="$PROJECT_DIR$/elastic-service" />
+            <option value="$PROJECT_DIR$/main-service" />
             <option value="$PROJECT_DIR$/user-service" />
           </set>
         </option>

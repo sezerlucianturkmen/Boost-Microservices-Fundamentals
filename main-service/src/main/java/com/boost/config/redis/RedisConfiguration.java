@@ -1,4 +1,4 @@
-package com.boost.config.refis;
+package com.boost.config.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
@@ -22,6 +22,6 @@ public class RedisConfiguration {
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
 
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration("localhost", port));
+        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
     }
 }

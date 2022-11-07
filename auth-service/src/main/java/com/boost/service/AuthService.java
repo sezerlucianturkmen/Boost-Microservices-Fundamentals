@@ -6,6 +6,8 @@ import com.boost.dto.request.UserProfileSaveRequestDto;
 import com.boost.exception.AuthServiceException;
 import com.boost.exception.ErrorType;
 import com.boost.manager.IUserProfileManager;
+import com.boost.rabbitmq.model.CreateProfile;
+import com.boost.rabbitmq.producer.CreateProfileProducer;
 import com.boost.repository.IAuthRepository;
 import com.boost.repository.entity.Auth;
 import com.boost.repository.enums.Roles;
@@ -24,13 +26,16 @@ public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository repository;
     private final JwtTokenManager tokenManager;
     private final IUserProfileManager userProfileManager;
+    private  final CreateProfileProducer createProfileProducer;
     public AuthService(IAuthRepository repository,
                        IUserProfileManager userProfileManager,
-                       JwtTokenManager tokenManager) {
+                       JwtTokenManager tokenManager,
+                       CreateProfileProducer createProfileProducer) {
         super(repository);
         this.repository = repository;
         this.userProfileManager = userProfileManager;
         this.tokenManager = tokenManager;
+        this.createProfileProducer=createProfileProducer;
     }
 
     public Boolean save(RegisterRequestDto dto){
@@ -45,11 +50,22 @@ public class AuthService extends ServiceManager<Auth,Long> {
                 auth.setRoles(Roles.ROLE_ADMIN);
         save(auth);
         if(auth.getId() != null){
-            userProfileManager.save(UserProfileSaveRequestDto.builder()
-                    .authid(auth.getId())
-                    .email(auth.getEmail())
-                    .username(auth.getUsername())
-                    .build());
+            try{
+                createProfileProducer.createProfile(CreateProfile.builder()
+                                .authid(auth.getId())
+                                .email(auth.getEmail())
+                                .username(auth.getUsername())
+                                .build());
+            }catch (Exception e){
+                e.printStackTrace();
+                delete(auth);
+                return false;
+            }
+//            userProfileManager.save(UserProfileSaveRequestDto.builder()
+//                    .authid(auth.getId())
+//                    .email(auth.getEmail())
+//                    .username(auth.getUsername())
+//                    .build());
             return true;
         }
         return false;
